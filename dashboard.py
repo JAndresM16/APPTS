@@ -3,7 +3,6 @@ import flet as ft
 def vista_dashboard(page: ft.Page, router):
     
     def cerrar_sesion(e):
-        # Borramos el nombre por seguridad al salir
         page.mi_usuario = None 
         page.route = "/"
         router(None) 
@@ -14,7 +13,6 @@ def vista_dashboard(page: ft.Page, router):
         snack.open = True
         page.update()
 
-    # SOLUCIÓN INFALIBLE: Obtenemos el nombre del objeto "page" (Python puro)
     nombre_usuario = getattr(page, "mi_usuario", "Usuario")
 
     img_logo = ft.Image(src="logo.png", width=45, height=45)
@@ -37,7 +35,7 @@ def vista_dashboard(page: ft.Page, router):
     )
 
     app_bar = ft.AppBar(
-        automatically_imply_leading=False, # Quita la flecha de retroceso
+        automatically_imply_leading=False,
         title=titulo_appbar,
         center_title=False,
         bgcolor=ft.Colors.WHITE,
@@ -47,7 +45,6 @@ def vista_dashboard(page: ft.Page, router):
     saludo = ft.Row(
         [
             ft.Text("Hola:", size=32, weight=ft.FontWeight.BOLD, color=ft.Colors.BLACK),
-            # Imprimimos el nombre que extrajimos de la BD
             ft.Text(nombre_usuario, size=32, weight=ft.FontWeight.BOLD, color="#149444"), 
         ],
         alignment=ft.MainAxisAlignment.CENTER
@@ -55,15 +52,22 @@ def vista_dashboard(page: ft.Page, router):
 
     lbl_nuevo = ft.Text("Nuevo Proyecto", size=16, weight=ft.FontWeight.BOLD, color=ft.Colors.BLACK)
     
+    # --- AQUÍ ESTÁ LA SOLUCIÓN ---
+    # Le damos width=380 y usamos Row+Column para un centrado perfecto y seguro
     btn_nuevo = ft.Container(
         content=ft.Column(
-            [ft.Icon(ft.Icons.ADD, size=100, color=ft.Colors.BLACK)],
+            [
+                ft.Row(
+                    [ft.Icon(ft.Icons.ADD, size=100, color=ft.Colors.BLACK)],
+                    alignment=ft.MainAxisAlignment.CENTER
+                )
+            ],
             alignment=ft.MainAxisAlignment.CENTER,
-            horizontal_alignment=ft.CrossAxisAlignment.CENTER
         ),
         bgcolor=ft.Colors.GREY_200,
         border_radius=10,
-        height=200,
+        height=180,
+        width=380, # Ancho para que ocupe la pantalla como en tu diseño
         on_click=proximamente,
         ink=True 
     )
