@@ -1,7 +1,8 @@
 import flet as ft
 import database  
 
-def vista_registro(page: ft.Page):
+# ¡LA CLAVE ESTÁ AQUÍ! Ahora recibe "router"
+def vista_registro(page: ft.Page, router):
     logo = ft.Image(src="logo.png", width=120, height=120)
     titulo_universidad = ft.Text("UNIVERSIDAD TÉCNICA\nDE MANABÍ", size=16, color="#008f39", weight=ft.FontWeight.BOLD, text_align=ft.TextAlign.CENTER)
     icono_appts = ft.Icon(ft.Icons.CLOUDY_SNOWING, color="#fbca03", size=40)
@@ -24,7 +25,6 @@ def vista_registro(page: ft.Page):
     fila2 = ft.Row([txt_cedula, txt_correo])
     fila3 = ft.Row([txt_password, txt_confirmar])
 
-    # Función infalible para mostrar mensajes por encima de todo
     def mostrar_mensaje(texto, color):
         snack = ft.SnackBar(content=ft.Text(texto), bgcolor=color)
         page.overlay.append(snack)
@@ -32,26 +32,21 @@ def vista_registro(page: ft.Page):
         page.update()
 
     def intentar_registro(e):
-        # 1. Validar campos vacíos
         if not txt_nombres.value or not txt_apellidos.value or not txt_cedula.value or not txt_correo.value or not txt_password.value or not txt_confirmar.value:
             mostrar_mensaje("Error: Todos los campos son obligatorios", "red")
             return
 
-        # 2. Validar que las contraseñas coincidan
         if txt_password.value != txt_confirmar.value:
             mostrar_mensaje("Error: Las contraseñas no coinciden", "red")
             return
 
-        # 3. Enviar a la base de datos
         exito = database.registrar_usuario(
             txt_nombres.value, txt_apellidos.value, 
             txt_cedula.value, txt_correo.value, txt_password.value
         )
 
-        # 4. Mostrar el mensaje correspondiente
         if exito:
             mostrar_mensaje("Usuario registrado correctamente", "green")
-            # Limpiamos los campos
             txt_nombres.value = ""
             txt_apellidos.value = ""
             txt_cedula.value = ""
@@ -71,7 +66,8 @@ def vista_registro(page: ft.Page):
 
     def volver(e):
         page.route = "/"
-        page.on_route_change(None)
+        # Y usamos el "router" para regresar al inicio sin errores
+        router(None) 
 
     return ft.View(
         route="/registro",

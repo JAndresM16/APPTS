@@ -1,7 +1,7 @@
 import flet as ft
 import database  
 
-def vista_login(page: ft.Page):
+def vista_login(page: ft.Page, router):
     titulo_top = ft.Text("APPTS", size=24, weight=ft.FontWeight.BOLD, color=ft.Colors.BLACK)
     logo = ft.Image(src="logo.png", width=120, height=120)
     titulo_universidad = ft.Text("UNIVERSIDAD TÉCNICA\nDE MANABÍ", size=16, color="#008f39", weight=ft.FontWeight.BOLD, text_align=ft.TextAlign.CENTER)
@@ -12,7 +12,6 @@ def vista_login(page: ft.Page):
     txt_usuario = ft.TextField(label="Usuario (Correo)", label_style=estilo_label, bgcolor=ft.Colors.GREY_200, border=ft.InputBorder.NONE, filled=True, border_radius=8)
     txt_password = ft.TextField(label="Contraseña", label_style=estilo_label, password=True, can_reveal_password=True, bgcolor=ft.Colors.GREY_200, border=ft.InputBorder.NONE, filled=True, border_radius=8)
     
-    # Función infalible para mostrar mensajes por encima de todo
     def mostrar_mensaje(texto, color):
         snack = ft.SnackBar(content=ft.Text(texto), bgcolor=color)
         page.overlay.append(snack)
@@ -27,8 +26,19 @@ def vista_login(page: ft.Page):
         correo = txt_usuario.value
         password = txt_password.value
         
-        if database.verificar_login(correo, password):
-            mostrar_mensaje("¡Inicio de sesión exitoso!", "green")
+        nombre_obtenido = database.verificar_login(correo, password)
+        
+        if nombre_obtenido:
+            # SOLUCIÓN INFALIBLE: Guardamos el nombre directamente en el objeto "page"
+            page.mi_usuario = nombre_obtenido
+            
+            mostrar_mensaje(f"¡Bienvenido, {nombre_obtenido}!", "green")
+            
+            txt_usuario.value = ""
+            txt_password.value = ""
+            
+            page.route = "/dashboard"
+            router(None) 
         else:
             mostrar_mensaje("Credenciales incorrectas", "red")
 
@@ -41,7 +51,7 @@ def vista_login(page: ft.Page):
 
     def volver(e):
         page.route = "/"
-        page.on_route_change(None)
+        router(None)
 
     return ft.View(
         route="/login",

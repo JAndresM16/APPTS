@@ -1,6 +1,7 @@
 import flet as ft
 from login import vista_login
 from registro import vista_registro
+from dashboard import vista_dashboard
 
 def main(page: ft.Page):
     page.title = "UTM - APPTS"
@@ -32,7 +33,7 @@ def main(page: ft.Page):
         eslogan = ft.Column([ft.Text("Universidad que transforma", size=14, italic=True, color="#0089bd"), ft.Text("Calidad que trasciende", size=14, italic=True, color="#0089bd")], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=0)
 
         vista_home = ft.View(
-            route="/",  # <-- CORRECCIÓN: Se especifica explícitamente el parámetro route
+            route="/",
             controls=[
                 logo, ft.Container(height=10), titulo_universidad, ft.Container(height=30), header_appts, ft.Container(height=40),
                 btn_registro, ft.Container(height=10), btn_login, ft.Container(expand=True), eslogan
@@ -45,10 +46,13 @@ def main(page: ft.Page):
         
         page.views.append(vista_home)
 
+        # --- AHORA PASAMOS "route_change" A LAS OTRAS VISTAS ---
         if page.route == "/login":
-            page.views.append(vista_login(page))
+            page.views.append(vista_login(page, route_change))
         elif page.route == "/registro":
-            page.views.append(vista_registro(page))
+            page.views.append(vista_registro(page, route_change))
+        elif page.route == "/dashboard":
+            page.views.append(vista_dashboard(page, route_change))
         
         page.update()
 
