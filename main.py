@@ -30,7 +30,8 @@ def main(page: ft.Page):
         btn_registro = ft.FilledButton(content=ft.Text("REGISTRO", size=20, weight=ft.FontWeight.BOLD, color=ft.Colors.WHITE), bgcolor="#0089bd", style=btn_style, width=250, on_click=ir_registro)
         btn_login = ft.FilledButton(content=ft.Text("LOGIN", size=20, weight=ft.FontWeight.BOLD, color=ft.Colors.WHITE), bgcolor="#149444", style=btn_style, width=250, on_click=ir_login)
         
-        eslogan = ft.Column([ft.Text("Universidad que transforma", size=14, italic=True, color="#0089bd"), ft.Text("Calidad que trasciende", size=14, italic=True, color="#0089bd")], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=0)
+        eslogan = ft.Column([ft.Text("Universidad que transforma", 
+                                     size=14, italic=True, color="#0089bd"), ft.Text("Calidad que trasciende", size=14, italic=True, color="#0089bd")], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=0)
 
         vista_home = ft.View(
             route="/",
