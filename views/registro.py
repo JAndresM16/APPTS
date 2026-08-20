@@ -1,5 +1,5 @@
 import flet as ft
-import database  
+import database.database as database  
 
 # ¡LA CLAVE ESTÁ AQUÍ! Ahora recibe "router"
 def vista_registro(page: ft.Page, router):

@@ -1,0 +1,19 @@
+**CREAR UN ENTORNO VIRTUAL**	
+python -m venv venv
+.\venv\Scripts\activate
+
+**INSTALACION DEL FLET**
+pip install flet
+pip install flet --upgrade
+
+**GITHUB**
+git add .
+git commit -m "Descripción de lo que hiciste hoy"
+git push
+
+**EJECUTAR LA APP**
+python main.py  //PARA EJECUTARLO EN LA PC
+ipconfig
+flet run --web --host 192.168.100.4 --port 8000 main.py // PARA CORRERLO EN EL CELULAR
+http://192.168.100.4:8000  //LO QUE VA EN EL CELULAR
+

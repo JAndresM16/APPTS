@@ -1,5 +1,5 @@
 import flet as ft
-import database  
+import database.database as database  
 
 def vista_login(page: ft.Page, router):
     titulo_top = ft.Text("APPTS", size=24, weight=ft.FontWeight.BOLD, color=ft.Colors.BLACK)

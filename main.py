@@ -1,7 +1,7 @@
 import flet as ft
-from login import vista_login
-from registro import vista_registro
-from dashboard import vista_dashboard
+from views.login import vista_login
+from views.registro import vista_registro
+from views.dashboard import vista_dashboard
 
 def main(page: ft.Page):
     page.title = "UTM - APPTS"
